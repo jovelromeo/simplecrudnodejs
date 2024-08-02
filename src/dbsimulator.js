@@ -1,10 +1,13 @@
 
-let tableGen = () => {
+let tableGenerator = () => {
     let table = [undefined];
     return {
+        get: (id) => {
+            return table[id];
+        },
         create: (record) => {
             table.push({ id: table.length, ...record });
-            return record;
+            return { id: table.length, ...record };
         },
         list: () => {
             return table.filter(Boolean);
@@ -14,12 +17,13 @@ let tableGen = () => {
             return record;
         },
         delete: (id) => {
+            let deletedRecord = table[id];
             table[id] = undefined;
-            return id;
+            return deletedRecord;
         },
     }
 }
 
 module.exports = {
-    tableGen,
+    tableGenerator,
 }
